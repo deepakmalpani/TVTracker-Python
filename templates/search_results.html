@@ -1,0 +1,11 @@
+<h1>
+    Search Results
+</h1>
+
+<ul>
+    {% for movie in movie_data %}
+        <li>
+            {{movie.Title}}, {{movie.Year}}
+        </li>
+    {% endfor %}
+</ul>
