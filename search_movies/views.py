@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.template import loader
+from django.http import HttpResponse
 import requests
 import environ
 
@@ -20,5 +22,16 @@ def search_results(request):
     response = requests.get(url)
     movie_data = response.json()
     # return movie_data
-    return render(request,"search_results.html" , {'movie_data': movie_data['Search']})
+    # return render(request,"search_results.html" , {'movie_data': movie_data['Search']})
+    context = {
+        'query' : query,
+        'movie_data' : movie_data,
+        'page_number' : 1,
+    }
 
+    template = loader.get_template('search_results.html')
+
+    return HttpResponse(template.render(context,request))
+
+
+    

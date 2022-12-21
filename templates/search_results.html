@@ -1,11 +1,15 @@
-<h1>
-    Search Results
-</h1>
+<h2>
+    Search Results for : 
+    <h3>{{query}}</h3>
+</h2>
+
+
 
 <ul>
-    {% for movie in movie_data %}
+    {% for movie in movie_data.Search %}
         <li>
-            {{movie.Title}}, {{movie.Year}}
+            <a href = "{% url 'movie-details' movie.imdbID %}">Title : {{movie.Title}} </a>
+            <br>Year : {{movie.Year}}
         </li>
     {% endfor %}
 </ul>
