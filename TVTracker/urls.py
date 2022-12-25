@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from search_movies.views import HomePageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",include("search_movies.urls"))
+    path("",HomePageView.as_view(), name="home"),
+    path("search/",include("search_movies.urls", namespace="search_movies")),
+    path("movie/",include("movie_details.urls", namespace="movie_details")),
+    path("user/", include("user_auth.urls", namespace="user_auth"),)
 ]

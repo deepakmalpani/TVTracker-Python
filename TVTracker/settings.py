@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'search_movies',
-    'movie_details'
+    'movie_details',
+    'user_auth'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'TVTracker.middleware.LoginRequiredMiddleware'
 ]
 
 ROOT_URLCONF = 'TVTracker.urls'
@@ -123,3 +125,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+AUTH_EXEMPT_ROUTES = ['user_auth:register','login']
+
+AUTH_LOGIN_ROUTE = 'user_auth:login'
