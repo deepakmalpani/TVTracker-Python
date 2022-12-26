@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from search_movies.views import HomePageView
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",HomePageView.as_view(), name="home"),
     path("search/",include("search_movies.urls", namespace="search_movies")),
     path("movie/",include("movie_details.urls", namespace="movie_details")),
-    path("user/", include("user_auth.urls", namespace="user_auth"),)
-]
+    path("user/", include("user_auth.urls", namespace="user_auth")),
+    path("profile/",include("user_profile.urls", namespace="user_profile"))
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

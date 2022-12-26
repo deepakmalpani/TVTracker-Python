@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'search_movies',
     'movie_details',
-    'user_auth'
+    'user_auth',
+    'user_profile'
 ]
 
 MIDDLEWARE = [
@@ -127,6 +129,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-AUTH_EXEMPT_ROUTES = ['user_auth:register','login']
+AUTH_EXEMPT_ROUTES = ['register','login','profile']
 
 AUTH_LOGIN_ROUTE = 'user_auth:login'
+
+AUTH_PROFILE_MODULE = 'user_profle.Profile'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -4,6 +4,8 @@
     <span>Hi {{request.user}}</span> 
     <br>
     <span><a href = "{% url 'user_auth:logout' %}">Logout</a></span>
+    <br>
+    <a href = "{% url 'user_profile:profile' user.username%}">Profile</a>
 </div>
 <br><br>
 <form action = "{% url 'search_movies:search_results' %}" method="get">

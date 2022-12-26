@@ -1,0 +1,29 @@
+{% block content %}
+
+    <div>
+        {% if profile.profile_pic %}
+            <img src = "{{ profile.profile_pic.url }}">
+        {% else %}
+            <img src = "">
+        {% endif %}
+        <span><b>{{ profile.user.username }}</b></span>
+    </div>
+
+    <div>
+        <ul>
+            <li><h5>User Information</h5></li>
+            <li>Joined on : {{ profile.date_created }}</li>
+        </ul>
+    </div>
+
+    <div>
+        <h4> Movies</h4>
+        <ul>
+            <li>Watching : {{ movies_completed_count }}</li>
+            <li>Completed : {{ movies_watching_count }}</li>
+            <li>Planned : {{ movies_planned_count }}</li>
+        </ul>
+    </div>
+
+{% endblock %}
+
