@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from .models import Movie
+from user_profile.models import Profile
 import environ
 import requests
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 env = environ.Env()
 # reading .env file
@@ -44,4 +46,25 @@ def get_movie_details(request, imdb_id):
     template = loader.get_template('movie_details.html')
 
     return HttpResponse(template.render(context, request))
+
+def add_movies_watching(request, imdb_id):
+    movie = Movie.objects.get(ImdbId = imdb_id)
+    user = request.user
+    profile = Profile.objects.get(user = user)
+
+    profile.watching_movies.add(movie)
+
+    return HttpResponseRedirect(reverse('movie_details:movie-details', args = [imdb_id]))
+
+def add_movies_completed(request, imdb_id):
+    movie = Movie.objects.get(ImdbId = imdb_id)
+    user = request.user
+    profile = Profile.objects.get(user = user)
+
+    if profile.watching_movies.filter(ImdbId = imdb_id).exists():
+        profile.watching_movies.remove(movie)
+
+    profile.completed_movies.add(movie)
+
+    return HttpResponseRedirect(reverse('movie_details:movie-details', args = [imdb_id]))
     

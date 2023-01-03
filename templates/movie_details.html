@@ -11,3 +11,6 @@
     <li>Actors : {{ movie_data.Actors }}</li>
     <li>Plot : {{ movie_data.Plot }}</li>
 </ul>
+
+<a href="{% url 'movie_details:add-movie-to-watching' movie_data.ImdbId %}">Add to watching</a>
+<a href="{% url 'movie_details:add-movie-to-completed' movie_data.ImdbId %}">Add to completed</a>
