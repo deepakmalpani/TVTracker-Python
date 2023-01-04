@@ -9,7 +9,7 @@ class Movie(models.Model):
     Director = models.CharField(max_length=100, blank=True)
     Actors = models.CharField(max_length=255, blank=True)
     Plot = models.CharField(max_length=900, blank=True)
-    ImdbId = models.CharField(max_length=10, blank=True)
+    imdbID = models.CharField(max_length=10, blank=True)
     Type = models.CharField(max_length=10, blank=True)
 
     class Meta:

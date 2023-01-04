@@ -15,8 +15,8 @@ API_KEY = env("API_KEY")
 # Create your views here.
 
 def get_movie_details(request, imdb_id):
-    if Movie.objects.filter(ImdbId = imdb_id).exists():
-        movie_data = Movie.objects.get(ImdbId = imdb_id)
+    if Movie.objects.filter(imdbID = imdb_id).exists():
+        movie_data = Movie.objects.get(imdbID = imdb_id)
         db_cache = True
 
         
@@ -34,7 +34,7 @@ def get_movie_details(request, imdb_id):
                 Director = movie_data['Director'],
                 Actors = movie_data['Actors'],
                 Plot = movie_data['Plot'],
-                ImdbId = movie_data['imdbID'],
+                imdbID = movie_data['imdbID'],
             )
             m.save()
         db_cache = False
@@ -47,24 +47,40 @@ def get_movie_details(request, imdb_id):
 
     return HttpResponse(template.render(context, request))
 
-def add_movies_watching(request, imdb_id):
-    movie = Movie.objects.get(ImdbId = imdb_id)
+def add_movies_planned(request, imdb_id):
+    movie = Movie.objects.get(imdbID = imdb_id)
     user = request.user
     profile = Profile.objects.get(user = user)
+    
+    profile.planned_movies.add(movie)
+
+    return HttpResponseRedirect(reverse('movie_details:movie-details', args = [imdb_id]))
+
+def add_movies_watching(request, imdb_id):
+    movie = Movie.objects.get(imdbID = imdb_id)
+    user = request.user
+    profile = Profile.objects.get(user = user)
+
+    if profile.planned_movies.filter(imdbID = imdb_id).exists():
+        profile.planned_movies.remove(movie)
 
     profile.watching_movies.add(movie)
 
     return HttpResponseRedirect(reverse('movie_details:movie-details', args = [imdb_id]))
 
 def add_movies_completed(request, imdb_id):
-    movie = Movie.objects.get(ImdbId = imdb_id)
+    movie = Movie.objects.get(imdbID = imdb_id)
     user = request.user
     profile = Profile.objects.get(user = user)
 
-    if profile.watching_movies.filter(ImdbId = imdb_id).exists():
+    if profile.watching_movies.filter(imdbID = imdb_id).exists():
         profile.watching_movies.remove(movie)
+    
+    if profile.planned_movies.filter(imdbID = imdb_id).exists():
+        profile.planned_movies.remove(movie)
 
     profile.completed_movies.add(movie)
 
     return HttpResponseRedirect(reverse('movie_details:movie-details', args = [imdb_id]))
-    
+
+
