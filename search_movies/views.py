@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
 from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -13,8 +12,7 @@ environ.Env.read_env()
 API_KEY = env("API_KEY")
 
 # Create your views here.
-class HomePageView(TemplateView):
-    template_name = "home.html"
+
 
 def search_results(request):
     query = request.GET.get("q")

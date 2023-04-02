@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>
     Movie details for : {{ movie_data.Title }}
 </h1>
@@ -15,3 +18,5 @@
 <a href="{% url 'movie_details:add-movie-to-planned' movie_data.imdbID %}">Add to planned</a>
 <a href="{% url 'movie_details:add-movie-to-watching' movie_data.imdbID %}">Add to watching</a>
 <a href="{% url 'movie_details:add-movie-to-completed' movie_data.imdbID %}">Add to completed</a>
+
+{% endblock %}
